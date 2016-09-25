@@ -15,19 +15,20 @@ git init
 
 ## 把一个文件放到Git仓库
 
-* 第一步，用命令git add告诉Git，把文件添加到仓库。
+* 第一步，用命令git add告诉Git，把“添加文件”这一事件提交到了Git版本库的暂存区。
 
 ```
 git add readme.txt
 ```
 
-事实上，这一步是把“添加文件”这一事件提交到了Git版本库的暂存区。
 
-* 第二步，用命令git commit告诉Git，把文件提交到仓库。
+* 第二步，用命令git commit告诉Git，把“添加文件”这一事件提交到Git版本库中的master分支。
+
 ```
 git commit -m "wrote a readme file"
 ```
-这一步是把“添加文件”这一事件从Git版本库的暂存区提交到了Git版本库中的master。只有提交到Git版本库中的master分支，才算把一个文件放到了Git仓库中。
+
+只有提交到Git版本库中的master分支，才算把一个文件放到了Git仓库中。
 
 简单解释一下git commit命令，-m后面输入的是本次提交的说明，可以输入任意内容，当然最好是有意义的，这样你就能从历史记录里方便地找到改动记录
 
@@ -36,39 +37,56 @@ git commit -m "wrote a readme file"
 ```
 git add file1.txt
 git add file2.txt file3.txt
+git add .
 git commit -m "add 3 files."
 ```
+
 ## 时间穿梭机
+
 git status命令可以让我们时刻掌握仓库当前的状态。
+
 ```
 git status
 ```
+
 git diff命令可以让我们查看文件发生了那些变化。
+
 ```
 git diff readme.txt
 ```
 git log命令可以告诉我们不同版本的历史记录。
+
 ```
 git log
 ```
+
 git log命令显示从最近到最远的提交日志。如果嫌输出信息太多，看得眼花缭乱的，可以试试加上--pretty=oneline参数。
+
 ```
 git log --pretty=oneline
 ```
 需要友情提示的是，你看到的一大串类似3628164...882e1e0的是commit id（版本号），和SVN不一样，Git的commit id不是1，2，3……递增的数字，而是一个SHA1计算出来的一个非常大的数字，用十六进制表示，而且你看到的commit id和我的肯定不一样，以你自己的为准。为什么commit id需要用这么一大串数字表示呢？因为Git是分布式的版本控制系统，后面我们还要研究多人在同一个版本库里工作，如果大家都用1，2，3……作为版本号，那肯定就冲突了。
 
 git reset可以重置仓库的版本
+
 首先，Git必须知道当前版本是哪个版本，在Git中，用HEAD表示当前版本，也就是最新的提交3628164...882e1e0（注意我的提交ID和你的肯定不一样），上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100。
+
 ```
 git reset --hard HEAD^
 ```
+
 git reset --hard还可以直接加版本号，调到指定版本。此处，版本号没必要写全，前几位就可以了，Git会自动去找。当然也不能只写前一两位，因为Git可能会找到多个版本号，就无法确定是哪一个了。
+
 git reflog命令可以查看输入的命令的历史。
+
 ## 管理修改
+
 cat命令可以查看文件
+
 ```
 cat readme.txt
 ```
+
 git diff HEAD -- 命令可以查看工作区和版本库里面最新版本的区别
 
 ```
