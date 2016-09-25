@@ -89,10 +89,13 @@ cat readme.txt
 
 git diff HEAD -- 命令可以查看工作区和版本库里面最新版本的区别
 
+这里的版本库是指版本库的mast分支。
+
 ```
 git diff HEAD -- readme.txt
 ```
 git checkout --可以丢弃工作区的修改
+
 ```
 git checkout -- readme.txt
 ```
@@ -102,7 +105,6 @@ git checkout -- readme.txt
 
 一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。
 
-总之，就是让这个文件回到最近一次git commit或git add时的状态。
 
 命令git reset HEAD可以把暂存区的修改撤销掉（unstage），重新放回工作区.
 ```
