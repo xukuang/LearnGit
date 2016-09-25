@@ -1,31 +1,42 @@
 ## 创建仓库（repository）
-* 创建空白目录
+* 创建空目录
 ```
 mkdir learngit
 cd learngit
 pwd
 ```
+
 * 让目录变成git可以管理的仓库
+
 ```
 git init
 ```
-这时会在当前目录下多了一个.git的目录(默认情况下，在windows系统中文件是隐藏起来的)，这个目录是Git来跟踪管理版本库的，没事千万不要手动修改这个目录里面的文件，不然改乱了，就把Git仓库给破坏了。
+这时会在当前目录下多了一个.git的目录（默认情况下，在windows系统中文件是隐藏起来的)，这个目录被称作Git版本库，它用来跟踪管理工作区（工作区可以简单理解为当前目录learngit下除.git目录以外的所有文件）文件的版本。没事千万不要手动修改这个目录里面的文件，不然改乱了，就把Git仓库给破坏了。
+
 ## 把一个文件放到Git仓库
+
 * 第一步，用命令git add告诉Git，把文件添加到仓库。
+
 ```
 git add readme.txt
 ```
+
+事实上，这一步是把“添加文件”这一事件提交到了Git版本库的暂存区。
+
 * 第二步，用命令git commit告诉Git，把文件提交到仓库。
 ```
 git commit -m "wrote a readme file"
 ```
+这一步是把“添加文件”这一事件从Git版本库的暂存区提交到了Git版本库中的master。只有提交到Git版本库中的master分支，才算把一个文件放到了Git仓库中。
+
 简单解释一下git commit命令，-m后面输入的是本次提交的说明，可以输入任意内容，当然最好是有意义的，这样你就能从历史记录里方便地找到改动记录
 
-为什么Git添加文件需要add，commit一共两步呢？因为commit可以一次提交很多文件，所以你可以多次add不同的文件，比如：
+默认情况下，git add一次只能从工作区添加一个文件到Git版本库的暂存区， git commit可以一次把Git版本库的暂存区的所有文件变化的记录提交到master分支。然而, git add \. 一次也能把工作区的多个文件提交到Git版本库的暂存区。
+
 ```
-$ git add file1.txt
-$ git add file2.txt file3.txt
-$ git commit -m "add 3 files."
+git add file1.txt
+git add file2.txt file3.txt
+git commit -m "add 3 files."
 ```
 ## 时间穿梭机
 git status命令可以让我们时刻掌握仓库当前的状态。
@@ -103,7 +114,7 @@ git checkout -- test.txt
 git checkout其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。
 ##　远程仓库
 * 本地仓库与远程仓库远程同步
-首先，在GitHub中创建一个新仓库learngit。然后，在本地的learngit仓库下运行命令。
+  首先，在GitHub中创建一个新仓库learngit。然后，在本地的learngit仓库下运行命令。
 ```
 git remote add origin git@github.com:xukuang/learngit.git
 ```
@@ -127,7 +138,7 @@ git remote rm origin
 git remote set-url origin git@github.com:xukuang
 
 * 远程库克隆
-git clone命令可以从远程库克隆一个本地库。
+  git clone命令可以从远程库克隆一个本地库。
 ```
 git clone git@github.com:xukuang/gitskills.git
 
@@ -136,7 +147,7 @@ git clone git@github.com:xukuang/gitskills.git
 ## 分支管理
 
 * 分支创建 
-创建dev分支，然后切换到dev分支
+  创建dev分支，然后切换到dev分支
 ```
 git checkout -b dev
 ```
