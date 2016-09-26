@@ -21,6 +21,7 @@ git init
 git add readme.txt
 ```
 
+如果用git add添加的是文件夹的话，文件夹里面一定要有文件才能添加成功。同样，一个文件夹中任何文件的更改，也只需填写文件夹名就可以了，而不一定非要切换到该文件夹下，再添加。
 
 * 第二步，用命令git commit告诉Git，把文件提交到了Git版本库中的master分支。
 
@@ -126,6 +127,7 @@ git reset HEAD readme.txt
 git rm test.txt
 git commit -m "remove test.txt"
 ```
+注意，这里也可以删除一个文件夹，只需要补充上-m即可，git commit -m 文件夹名。
 
 另一种情况是删错了，因为版本库里还有呢，所以可以很轻松地把误删的文件恢复到最新版本：
 
@@ -196,7 +198,7 @@ git clone https://github.com/Spatial-R/spatial-r.github.io.git xukuang.github.io
 该命令的作用是把别人的远程仓库克隆到自己本地的xukuang.github.io目录中。
 
 2. 关联自己的远程仓库
-克隆了远程库到自己的电脑上后，可以通过git remote set-url origin将这个库再关联为自己的远程库。即如何修改origin的地址。
+   克隆了远程库到自己的电脑上后，可以通过git remote set-url origin将这个库再关联为自己的远程库。即如何修改origin的地址。
 
 ```
 git remote set-url origin git@github.com:xukuang/R.git
