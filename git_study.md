@@ -229,6 +229,8 @@ git merge命令用于合并指定分支到当前分支。合并后，再查看re
 
 当然，也不是每次合并都能Fast-forward，我们后面会讲其他方式的合并。
 
+* 分支删除
+
 合并完成后，就可以放心地删除dev分支了。
 
 ```
@@ -242,6 +244,7 @@ git branch -D dev
 ```
 
 删除后，查看branch，就只剩下master分支了：
+
 ```
 git branch
 ```
@@ -249,6 +252,7 @@ git branch
 
 bug分支
 Git还提供了一个stash功能，可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作。
+
 ```
 git stash
 ```
@@ -340,6 +344,11 @@ git push --set-upstream origin feature
 ```
 之后，如果在当前分支上，依旧可以使用git push推送。
 
+当你要删除远程仓库中分支的时候，可以使用一下命令。
+
+```
+git push origin :dev
+```
 
 把本地master分支的最新修改推送至GitHub，现在，你就拥有了真正的分布式版本库。
 
