@@ -1,6 +1,6 @@
 ## git的初始配置
 
-* 设置用户名密码
+初始配置主要包括配置用户名和密码。
 
 ```
 git config -- global user.email "kuang_xu@126.com"
@@ -12,34 +12,6 @@ git config -- global user.name "xukuang"
 注意git config命令的--global参数，用了这个参数，表示你这台机器上所有的Git仓库都会使用这个配置，当然也可以对某个仓库指定不同的用户名和Email地址。
 
 git config -- list 可以查看你设置好的用户名和邮箱。
-
-* 生成密钥
-
-```
-ssh-keygen -t rsa -C "kuang_xu@126.com" 
-# Generating public/private rsa key pair.
-# Enter file in which to save the key (/c/Users/kx/.ssh/id_rsa):
-# 此时弹出命令为提醒设置生成文件位置，直接回车(即不设置)
-# Created directory '/c/Users/kx/.ssh'.
-# 即存放于C:\Users\kx\.ssh
-# Enter passphrase (empty for no passphrase):
-# 直接回车，既没有密码
-# Enter same passphrase again:
-# 直接回车，既没有密码
-# Enter same passphrase again:
-# 再次回车(密码确认，再次输入
-```
-
-* 连接Gighub
-
-上述命令若执行成功，会在c/Users/kx/.ssh/目录下生成两个文件id_rsa和id_rsa.pub，用文本编辑器打开ssh.pub文件，拷贝其中的内容，在Github网站上将其添加到Add SSH Key
-
-* 查看连接成功
-
-```
-ssh -T git@github.com
-```
-回车就会看到：You’ve successfully authenticated, but GitHub does not provide shell access 。这就表示已成功连上github。
 
 
 ## 创建仓库（repository）
@@ -61,7 +33,7 @@ git init
 
 ## 把一个文件放到Git仓库
 
-* 第一步，用命令git add告诉Git，把文件提交到了Git版本库的暂存区。
+* 第一步，用命令git add告诉Git，把文件添加到了Git版本库的暂存区。
 
 ```
 git add readme.txt
@@ -77,7 +49,7 @@ git commit -m "wrote a readme file"
 
 只有提交到Git版本库中的master分支，才算把一个文件放到了Git仓库中。
 
-简单解释一下git commit命令，-m后面输入的是本次提交的说明，可以输入任意内容，当然最好是有意义的，这样你就能从历史记录里方便地找到改动记录
+简单解释一下git commit命令，-m后面输入的是本次提交的说明，可以输入任意内容，当然最好是有意义的，这样你就能从历史记录里方便地找到改动记录。此外，"git commit --amend"命令可以修改最近一次的commit时的提交说明。
 
 默认情况下，git add一次只能从工作区添加一个文件到Git版本库的暂存区， git commit可以一次把Git版本库的暂存区的所有文件变化的记录提交到master分支。然而, git add \. 一次也能把工作区的多个文件提交到Git版本库的暂存区。
 
@@ -90,18 +62,13 @@ git commit -m "add 3 files."
 
 ## 时间穿梭机
 
-git status命令可以让我们时刻掌握仓库当前的状态。
+* git status命令可以让我们时刻掌握仓库当前的状态
 
 ```
 git status
 ```
 
-git diff命令可以让我们查看文件发生了那些变化。
-
-```
-git diff readme.txt
-```
-git log命令可以告诉我们不同版本的历史记录。
+* git log命令可以告诉我们不同版本的历史记录
 
 ```
 git log
@@ -114,9 +81,11 @@ git log --pretty=oneline
 ```
 需要友情提示的是，你看到的一大串类似3628164...882e1e0的是commit id（版本号），和SVN不一样，Git的commit id不是1，2，3……递增的数字，而是一个SHA1计算出来的一个非常大的数字，用十六进制表示，而且你看到的commit id和我的肯定不一样，以你自己的为准。为什么commit id需要用这么一大串数字表示呢？因为Git是分布式的版本控制系统，后面我们还要研究多人在同一个版本库里工作，如果大家都用1，2，3……作为版本号，那肯定就冲突了。
 
-git reset可以重置仓库的版本
+不同于git log，git reflog 可以查看所有的提交(即 git comit)记录。
 
-首先，Git必须知道当前版本是哪个版本，在Git中，用HEAD表示当前版本，也就是最新的提交3628164...882e1e0（注意我的提交ID和你的肯定不一样），上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100。
+* git reset可以重置仓库的版本
+
+首先，Git必须知道当前版本是哪个版本，这个可以借助git log命令实现。在Git中，用HEAD表示当前版本，也就是最新的提交3628164...882e1e0（注意我的提交ID和你的肯定不一样），上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100。
 
 ```
 git reset --hard HEAD^
@@ -124,23 +93,42 @@ git reset --hard HEAD^
 
 git reset --hard还可以直接加版本号，调到指定版本。此处，版本号没必要写全，前几位就可以了，Git会自动去找。当然也不能只写前一两位，因为Git可能会找到多个版本号，就无法确定是哪一个了。
 
+事实上，git reset细分分为三个命令：
+1. git reset -- soft HEAD^: 移动head的指向，使其指向上一个版本
+2. git reset -- mixed HEAD^: 移动head的指向，使其指向上一个版本; 同时将HEAD移动后指向的版本回滚到暂存区
+3. git reset -- hard HEAD^: 移动head的指向，使其指向上一个版本; 同时将HEAD移动后指向的版本回滚到暂存区；还要回滚后的暂存区还原到工作区
+
+此外，"git reset 版本号 文件名/路径"还能恢复指定的文件。
 
 ## 管理修改
 
-cat命令可以查看文件
+* cat命令可以查看文件
 
 ```
 cat readme.txt
 ```
 
-git diff HEAD -- 命令可以查看工作区和版本库里面最新版本的区别
+* git diff命令可以比较文件间的差异
+
+默认情况下，该命令用于比较工作区与暂存区的文件间的差异。
+
+```
+git diff
+```
+
+此外，"git diff  版本号"命令可以比较工作区与指定版本之间的差异；"git diff 版本号1 版本号2"命令可以比较两个版本之间的差异；"git diff --cached"命令可以比较暂存区与当前版本间的差异；"git diff --cached 版本号"命令可以比较暂存区与指定版本之间的差异。
+
+git diff HEAD -- 命令可以查看工作区和版本库里面指定文件的区别。
 
 这里的版本库是指版本库的mast分支。
 
 ```
 git diff HEAD -- readme.txt
 ```
-git checkout --可以丢弃工作区的修改
+
+* git checkout 命令可以丢弃工作区的修改
+
+工作目录中丢弃指定的文件。
 
 ```
 git checkout -- readme.txt
@@ -169,6 +157,7 @@ git reset HEAD readme.txt
 一般情况下，你通常直接在文件管理器中把没用的文件删了，或者用rm命令删了。这个时候，Git知道你删除了文件，因此，工作区和版本库就不一致了，git status命令会立刻告诉你哪些文件被删除了。
 
 现在你有两个选择，一是确实要从版本库中删除该文件，那就用命令git rm删掉，并且git commit。
+
 ```
 git rm test.txt
 git commit -m "remove test.txt"
@@ -183,6 +172,38 @@ git checkout -- test.txt
 git checkout其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。
 
 ##　同步远程仓库
+
+* 关联Github账户
+
+1. 生成密钥
+
+在电脑的git中，输入一下命令生成git密码。
+
+```
+ssh-keygen -t rsa -C "kuang_xu@126.com" 
+# Generating public/private rsa key pair.
+# Enter file in which to save the key (/c/Users/kx/.ssh/id_rsa):
+# 此时弹出命令为提醒设置生成文件位置，直接回车(即不设置)
+# Created directory '/c/Users/kx/.ssh'.
+# 即存放于C:\Users\kx\.ssh
+# Enter passphrase (empty for no passphrase):
+# 直接回车，既没有密码
+# Enter same passphrase again:
+# 直接回车，既没有密码
+# Enter same passphrase again:
+# 再次回车(密码确认，再次输入
+```
+
+2. 连接Github
+
+上述命令若执行成功，会在c/Users/kx/.ssh/目录下生成两个文件id_rsa和id_rsa.pub，用文本编辑器打开ssh.pub文件，拷贝其中的内容，在Github网站上个人账户中将其添加到Add SSH Key中。
+
+3. 查看关联成功
+
+```
+ssh -T git@github.com
+```
+回车就会看到：You’ve successfully authenticated, but GitHub does not provide shell access 。这就表示已成功连上github。
 
 
 * 创建Github远程仓库
