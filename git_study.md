@@ -250,16 +250,20 @@ git branch
 ```
 因为创建、合并和删除分支非常快，所以Git鼓励你使用分支完成某个任务，合并后再删掉分支，这和直接在master分支上工作效果是一样的，但过程更安全。
 
-bug分支
+* bug分支
+
 Git还提供了一个stash功能，可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作。
 
 ```
 git stash
 ```
+
 用git stash list命令看看：
+
 ```
  git stash list
 ```
+
 工作现场还在，Git把stash内容存在某个地方了，但是需要恢复一下，有两个办法：
 
 一是用git stash apply恢复，但是恢复后，stash内容并不删除，你需要用git stash drop来删除。
@@ -267,6 +271,7 @@ git stash
 另一种方式是用git stash pop，恢复的同时把stash内容也删了。
 
 你可以多次stash，恢复的时候，先用git stash list查看，然后恢复指定的stash，用命令。
+
 ```
 git stash apply stash@{0}
 ```
