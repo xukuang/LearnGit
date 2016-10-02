@@ -1,5 +1,51 @@
+## git的初始配置
+
+* 设置用户名密码
+
+```
+git config -- global user.email "kuang_xu@126.com"
+git config -- global user.name "xukuang"
+```
+
+因为Git是分布式版本控制系统，所以，每个机器都必须自报家门：你的名字和Email地址。你也许会担心，如果有人故意冒充别人怎么办？这个不必担心，首先我们相信大家都是善良无知的群众，其次，真的有冒充的也是有办法可查的。
+
+注意git config命令的--global参数，用了这个参数，表示你这台机器上所有的Git仓库都会使用这个配置，当然也可以对某个仓库指定不同的用户名和Email地址。
+
+git config -- list 可以查看你设置好的用户名和邮箱。
+
+* 生成密钥
+
+```
+ssh-keygen -t rsa -C "kuang_xu@126.com" 
+# Generating public/private rsa key pair.
+# Enter file in which to save the key (/c/Users/kx/.ssh/id_rsa):
+# 此时弹出命令为提醒设置生成文件位置，直接回车(即不设置)
+# Created directory '/c/Users/kx/.ssh'.
+# 即存放于C:\Users\kx\.ssh
+# Enter passphrase (empty for no passphrase):
+# 直接回车，既没有密码
+# Enter same passphrase again:
+# 直接回车，既没有密码
+# Enter same passphrase again:
+# 再次回车(密码确认，再次输入
+```
+
+* 连接Gighub
+
+上述命令若执行成功，会在c/Users/kx/.ssh/目录下生成两个文件id_rsa和id_rsa.pub，用文本编辑器打开ssh.pub文件，拷贝其中的内容，在Github网站上将其添加到Add SSH Key
+
+* 查看连接成功
+
+```
+ssh -T git@github.com
+```
+回车就会看到：You’ve successfully authenticated, but GitHub does not provide shell access 。这就表示已成功连上github。
+
+
 ## 创建仓库（repository）
+
 * 创建空目录
+
 ```
 mkdir learngit
 cd learngit
