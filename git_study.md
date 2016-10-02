@@ -196,19 +196,27 @@ git branch dev
 git checkout dev
 ```
 
-然后，用git branch命令查看当前分支。
+* 分支查看
+
+用git branch命令查看当前分支。
 
 ```
 git branch
 ```
 
+* 分支切换
+
 现在，dev分支的工作完成，我们就可以切换回master分支。
+
 
 ```
 git checkout master
 ```
 
 切换回master分支后，再查看一个readme.txt文件，刚才添加的内容不见了！因为那个提交是在dev分支上，而master分支此刻的提交点并没有变。
+
+* 分支合并
+
 git merge命令用于合并指定分支到当前分支。
 
 ```
@@ -306,6 +314,8 @@ ssh -T git@github.com
 git remote add origin git@github.com:xukuang/learngit.git
 ```
 
+添加后，远程库的名字就是origin，这是Git默认的叫法，也可以改成别的，但是origin这个名字一看就知道是远程库。git@github.com:xukuang/learngit.git可以认为是远程仓库origin的路径。你可以通过"git remote -v"命令查看所有远程仓库的名字。
+
 * 推送本地内容
 
 最后，就可以把本地库的所有内容推送到远程库上。
@@ -355,10 +365,15 @@ git clone https://github.com/xukuang/xukuang.github.io_hexo.git
 ```
 
 * 克隆别人的远程仓库
+
+克隆别人的仓库，你可以在别人的Github上，点“Fork”就在自己的账号下克隆了一个bootstrap仓库，接着再从自己的账号下clone。另外，你也可以先克隆到本地，在在关联到自己的账户。
+
 1. 克隆远程仓库
+
 ```
 git clone https://github.com/Spatial-R/spatial-r.github.io.git xukuang.github.io
 ```
+
 该命令的作用是把别人的远程仓库克隆到自己本地的xukuang.github.io目录中。
 
 2. 关联自己的远程仓库
