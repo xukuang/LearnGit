@@ -156,7 +156,7 @@ git reset HEAD readme.txt
 在Git中，删除也是一个修改操作，我们实战一下，先添加一个新文件test.txt到Git并且提交。
 一般情况下，你通常直接在文件管理器中把没用的文件删了，或者用rm命令删了。这个时候，Git知道你删除了文件，因此，工作区和版本库就不一致了，git status命令会立刻告诉你哪些文件被删除了。
 
-现在你有两个选择，一是确实要从版本库中删除该文件，那就用命令git rm删掉，并且git commit。
+现在你有两个选择，一是确实要从版本库中删除该文件，那就用命令git rm删掉(不要再用资源管理里删除文件了)，并且git commit。
 
 ```
 git rm test.txt
@@ -164,12 +164,20 @@ git commit -m "remove test.txt"
 ```
 注意，这里也可以删除一个文件夹，只需要补充上-m即可，git commit -m 文件夹名。
 
-另一种情况是删错了，因为版本库里还有呢，所以可以很轻松地把误删的文件恢复到最新版本：
+另一种情况是删错了，因为版本库里还有呢，所以可以很轻松地把误删的文件恢复到最新版本。
 
 ```
 git checkout -- test.txt
 ```
 git checkout其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。
+
+## 重命名文件
+
+同删除文件一样，建议直接使用git mv 命令，而不要再用文件管理器删除文件了。
+
+```
+git mv 文件名1 文件名2
+```
 
 ##　同步远程仓库
 
@@ -233,7 +241,8 @@ git push -u origin master
 ```
 git push origin master
 ```
-之后，在本地提交，甚至可以简化为 git push。
+当只有一个分支时，在本地提交，甚至可以简化为 git push。
+
 把本地master分支的最新修改推送至GitHub，现在，你就拥有了真正的分布式版本库。
 
 此外，要去除本地仓库与远程仓库的关联，可以使用如下命令。
@@ -265,7 +274,8 @@ git clone https://github.com/Spatial-R/spatial-r.github.io.git xukuang.github.io
 该命令的作用是把别人的远程仓库克隆到自己本地的xukuang.github.io目录中。
 
 2. 关联自己的远程仓库
-   克隆了远程库到自己的电脑上后，可以通过git remote set-url origin将这个库再关联为自己的远程库。即如何修改origin的地址。
+
+克隆了远程库到自己的电脑上后，可以通过git remote set-url origin将这个库再关联为自己的远程库。即如何修改origin的地址。
 
 ```
 git remote set-url origin git@github.com:xukuang/R.git
@@ -284,25 +294,35 @@ git push
 ## 分支管理
 
 * 分支创建 
-  创建dev分支，然后切换到dev分支
+
+创建dev分支，然后切换到dev分支
+
 ```
 git checkout -b dev
 ```
+
 git checkout命令加上-b参数表示创建并切换，相当于以下两条命令。
+
 ```
 git branch dev
 git checkout dev
 ```
+
 然后，用git branch命令查看当前分支。
+
 ```
 git branch
 ```
+
 现在，dev分支的工作完成，我们就可以切换回master分支。
+
 ```
 git checkout master
 ```
+
 切换回master分支后，再查看一个readme.txt文件，刚才添加的内容不见了！因为那个提交是在dev分支上，而master分支此刻的提交点并没有变。
 git merge命令用于合并指定分支到当前分支。
+
 ```
 git merge dev
 ```
@@ -314,10 +334,13 @@ git merge命令用于合并指定分支到当前分支。合并后，再查看re
 当然，也不是每次合并都能Fast-forward，我们后面会讲其他方式的合并。
 
 合并完成后，就可以放心地删除dev分支了。
+
 ```
 git branch -d dev
 ```
+
 此外，在merge前，要删除分支dev，需要强行删除，使用命令。
+
 ```
 git branch -D dev
 ```
