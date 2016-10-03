@@ -1,6 +1,10 @@
 ## git的初始配置
+* 查看当前使用的git的版本
+```
+git version
+```
 
-初始配置主要包括配置用户名和密码。
+* 初始配置主要包括配置用户名和密码。
 
 ```
 git config -- global user.email "kuang_xu@126.com"
@@ -204,6 +208,8 @@ git checkout dev
 git branch
 ```
 
+git branch命令会列出所有分支，当前分支前面会标一个*号。
+
 * 分支切换
 
 现在，dev分支的工作完成，我们就可以切换回master分支。
@@ -276,11 +282,11 @@ git stash
 git stash apply stash@{0}
 ```
 
-##　同步远程仓库
+##　远程仓库管理
 
-* 关联Github账户
+### 关联Github账户
 
-1. 生成密钥
+* 生成密钥
 
 在电脑的git中，输入一下命令生成git密码。
 
@@ -299,11 +305,11 @@ ssh-keygen -t rsa -C "kuang_xu@126.com"
 # 再次回车(密码确认，再次输入
 ```
 
-2. 连接Github
+* 连接Github
 
 上述命令若执行成功，会在c/Users/kx/.ssh/目录下生成两个文件id_rsa和id_rsa.pub，用文本编辑器打开ssh.pub文件，拷贝其中的内容，在Github网站上个人账户中将其添加到Add SSH Key中。
 
-3. 查看关联成功
+* 查看关联成功
 
 ```
 ssh -T git@github.com
@@ -311,23 +317,55 @@ ssh -T git@github.com
 回车就会看到：You’ve successfully authenticated, but GitHub does not provide shell access 。这就表示已成功连上github。
 
 
-* 创建Github远程仓库
+### 创建Github远程仓库
 
-在GitHub网站上创建一个新仓库learngit。
+在GitHub网站上创建一个新仓库learngit。这里的仓库名是learngit，但在本地git中关联时，一般看作是地址的一部分。
 
-* 建立远程链接
+### 建立远程链接
 
 在本地的learngit仓库下运行命令。此时，本地的仓库必须是完整的git仓库（也就是说存在版本库）才能上传成功。
+
+建立远程链接的命令为 git remote add <shortname> <url> 。
 
 ```
 git remote add origin git@github.com:xukuang/learngit.git
 ```
 
-添加后，远程库的名字就是origin，这是Git默认的叫法，也可以改成别的，但是origin这个名字一看就知道是远程库。git@github.com:xukuang/learngit.git可以认为是远程仓库origin的路径。你可以通过"git remote -v"命令查看所有远程仓库的名字。
+添加后，远程库的名字就是origin，这是Git默认的叫法，也可以改成别的，但是origin这个名字一看就知道是远程库。git@github.com:xukuang/learngit.git可以认为是远程仓库origin的路径。
 
-* 推送本地内容
+### 查看远程链接
 
-最后，就可以把本地库的所有内容推送到远程库上。
+``` 
+"git remote -v"
+```
+
+该命令可以查看所有远程仓库的名字。
+
+### 重命名远程链接
+
+git remote rename 命令修改某个远程仓库在本地的简称，比如想把 pb 改成 paul，可以这么运行：
+
+```
+git remote rename pb paul
+```
+
+注意，对远程仓库的重命名，也会使对应的分支名称发生变化，原来的 pb/master 分支现在成了 paul/master。
+
+碰到远端仓库服务器迁移，或者原来的克隆镜像不再使用，又或者某个参与者不再贡献代码，那么需要移除对应的远端仓库，可以运行 git remote rm 命令：
+
+$ git remote rm paul
+
+### 删除远程链接
+
+此外，要去除本地仓库与远程仓库的关联，可以使用如下命令。
+
+```
+git remote rm origin
+```
+
+### 推送本地内容
+
+建立链接后，就可以把本地库的所有内容推送到远程库上。
 
 ```
 git push -u origin master
@@ -337,31 +375,30 @@ git push -u origin master
 由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。
 
 之后，如果本地作了提交，可以通过命令。
+
 ```
 git push origin master
 ```
 该命令甚至可以简化为 git push。
 
-当仓库有两个以上分支时，推送完master分支之后，首次其他分支，要使用一下命令。
+当仓库有两个以上分支时，推送完master分支之后，首次推送其他分支，要使用一下命令。
 
 ```
 git push --set-upstream origin feature
 ```
 之后，如果在当前分支上，依旧可以使用git push推送。
 
-当你要删除远程仓库中分支的时候，可以使用一下命令。
+事实上，我们也可以通过git push命令删除远程仓库中分支的时候。
 
 ```
 git push origin :dev
 ```
+ 
+git push [远程名] [本地分支]:[远程分支] 语法，如果省略[本地分支]，那就等于是在说“在这里提取空白然后把它变成[远程分支]”。
+也可以使用命令 
 
 把本地master分支的最新修改推送至GitHub，现在，你就拥有了真正的分布式版本库。
 
-此外，要去除本地仓库与远程仓库的关联，可以使用如下命令。
-
-```
-git remote rm origin
-```
 
 ## 克隆远程仓库
 
