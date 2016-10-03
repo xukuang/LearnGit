@@ -336,7 +336,7 @@ git remote add origin git@github.com:xukuang/learngit.git
 ### 查看远程链接
 
 ``` 
-"git remote -v"
+git remote -v
 ```
 
 该命令可以查看所有远程仓库的名字。
@@ -383,6 +383,8 @@ git push -u origin master
 git push origin master
 ```
 该命令甚至可以简化为 git push。
+
+### 推送其它分支
 
 当仓库有两个以上分支时，推送完master分支之后，首次推送其他分支，要使用一下命令。
 
