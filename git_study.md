@@ -367,7 +367,7 @@ git remote rm origin
 
 建立链接后，就可以把本地库的所有内容推送到远程库上。
 
-### 推送master分支到远程仓库
+* 推送master分支到远程仓库
 
 ```
 git push -u origin master
@@ -384,7 +384,7 @@ git push origin master
 ```
 该命令甚至可以简化为 git push。
 
-### 推送其它分支
+* 推送其它分支
 
 当仓库有两个以上分支时，推送完master分支之后，首次推送其他分支，要使用一下命令。
 
@@ -393,7 +393,7 @@ git push --set-upstream origin feature
 ```
 之后，如果在当前分支上，依旧可以使用git push推送。
 
-事实上，我们也可以通过git push命令删除远程仓库中分支。
+事实上，我们也可以通过git push命令删除远程仓库中的这个分支。
 
 ```
 git push origin :feature
