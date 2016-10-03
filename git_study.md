@@ -393,14 +393,14 @@ git push --set-upstream origin feature
 ```
 之后，如果在当前分支上，依旧可以使用git push推送。
 
-事实上，我们也可以通过git push命令删除远程仓库中分支的时候。
+事实上，我们也可以通过git push命令删除远程仓库中分支。
 
 ```
-git push origin :dev
+git push origin :feature
 ```
  
 git push [远程名] [本地分支]:[远程分支] 语法，如果省略[本地分支]，那就等于是在说“在这里提取空白然后把它变成[远程分支]”。
-也可以使用命令 
+也可以使用命令。 
 
 把本地master分支的最新修改推送至GitHub，现在，你就拥有了真正的分布式版本库。
 
