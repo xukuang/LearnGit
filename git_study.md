@@ -282,7 +282,7 @@ git stash
 git stash apply stash@{0}
 ```
 
-##　远程仓库管理
+## 远程管理
 
 ### 关联Github账户
 
@@ -309,19 +309,22 @@ ssh-keygen -t rsa -C "kuang_xu@126.com"
 
 上述命令若执行成功，会在c/Users/kx/.ssh/目录下生成两个文件id_rsa和id_rsa.pub，用文本编辑器打开ssh.pub文件，拷贝其中的内容，在Github网站上个人账户中将其添加到Add SSH Key中。
 
-* 查看关联成功
+* 查看Github账户关联成功
 
 ```
 ssh -T git@github.com
 ```
 回车就会看到：You’ve successfully authenticated, but GitHub does not provide shell access 。这就表示已成功连上github。
 
+### 远程仓库管理
 
-### 创建Github远程仓库
+#### 关联远程仓库
+
+*  创建Github远程仓库
 
 在GitHub网站上创建一个新仓库learngit。这里的仓库名是learngit，但在本地git中关联时，一般看作是地址的一部分，而不认为是远程仓库名。
 
-### 建立远程链接
+* 建立远程链接
 
 在本地的learngit仓库下运行命令。此时，本地的仓库必须是完整的git仓库（也就是说存在版本库）才能上传成功。
 
@@ -333,7 +336,7 @@ git remote add origin git@github.com:xukuang/learngit.git
 
 添加后，远程库的名字就是origin，这是Git默认的叫法，也可以改成别的，但是origin这个名字一看就知道是远程库。git@github.com:xukuang/learngit.git可以认为是远程仓库origin的地址。
 
-### 查看远程链接
+#### 查看远程仓库关联
 
 ``` 
 git remote
@@ -341,7 +344,7 @@ git remote
 该命令会列出所有远程仓库名的名字，-v选项还会列出远程仓库的地址。
 
 
-### 重命名远程链接
+#### 重命名远程仓库关联
 
 git remote rename 命令修改某个远程仓库在本地的简称，比如想把 pb 改成 paul，可以这么运行：
 
@@ -352,7 +355,7 @@ git remote rename pb paul
 注意，对远程仓库的重命名，也会使对应的分支名称发生变化，原来的 pb/master 分支现在成了 paul/master。
 
 
-### 删除远程链接
+### 删除远程仓库关联
 
 此外，要去除本地仓库与远程仓库的关联，可以使用如下命令。
 
