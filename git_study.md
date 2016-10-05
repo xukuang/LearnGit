@@ -1,10 +1,10 @@
 ## git的初始配置
-* 查看当前使用的git的版本
+### 查看当前使用的git的版本
 ```
 git version
 ```
 
-* 初始配置主要包括配置用户名和密码。
+### 初始配置主要包括配置用户名和密码。
 
 ```
 git config -- global user.email "kuang_xu@126.com"
@@ -18,9 +18,9 @@ git config -- global user.name "xukuang"
 git config -- list 可以查看你设置好的用户名和邮箱。
 
 
-## 创建仓库（repository）
+## 创建本地仓库（repository）
 
-* 创建空目录
+### 创建空目录
 
 ```
 mkdir learngit
@@ -28,16 +28,16 @@ cd learngit
 pwd
 ```
 
-* 让目录变成git可以管理的仓库
+### 让目录变成git可以管理的仓库
 
 ```
 git init
 ```
 这时会在当前目录下多了一个.git的目录（默认情况下，在windows系统中文件是隐藏起来的)，这个目录被称作Git版本库，它用来跟踪管理工作区（工作区可以简单理解为当前目录learngit下除.git目录以外的所有文件）文件的版本。没事千万不要手动修改这个目录里面的文件，不然改乱了，就把Git仓库给破坏了。
 
-## 把一个文件放到Git仓库
+## 推送内容到本地仓库
 
-* 第一步，用命令git add告诉Git，把文件添加到了Git版本库的暂存区。
+### 第一步，用命令git add告诉Git，把文件添加到了Git版本库的暂存区。
 
 ```
 git add readme.txt
@@ -45,7 +45,7 @@ git add readme.txt
 
 如果用git add添加的是文件夹的话，文件夹里面一定要有文件才能添加成功。同样，一个文件夹中任何文件的更改，也只需填写文件夹名就可以了，而不一定非要切换到该文件夹下，再添加。
 
-* 第二步，用命令git commit告诉Git，把文件提交到了Git版本库中的master分支。
+### 第二步，用命令git commit告诉Git，把文件提交到了Git版本库中的master分支。
 
 ```
 git commit -m "wrote a readme file"
@@ -66,13 +66,13 @@ git commit -m "add 3 files."
 
 ## 时间穿梭机
 
-* git status命令可以让我们时刻掌握仓库当前的状态
+### git status命令可以让我们时刻掌握仓库当前的状态
 
 ```
 git status
 ```
 
-* git log命令可以告诉我们不同版本的历史记录
+### git log命令可以告诉我们不同版本的历史记录
 
 ```
 git log
@@ -87,7 +87,7 @@ git log --pretty=oneline
 
 不同于git log，git reflog 可以查看所有的提交(即 git comit)记录。
 
-* git reset可以重置仓库的版本
+### git reset可以重置仓库的版本
 
 首先，Git必须知道当前版本是哪个版本，这个可以借助git log命令实现。在Git中，用HEAD表示当前版本，也就是最新的提交3628164...882e1e0（注意我的提交ID和你的肯定不一样），上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100。
 
@@ -106,13 +106,13 @@ git reset --hard还可以直接加版本号，调到指定版本。此处，版�
 
 ## 管理修改
 
-* cat命令可以查看文件
+### cat命令可以查看文件
 
 ```
 cat readme.txt
 ```
 
-* git diff命令可以比较文件间的差异
+### git diff命令可以比较文件间的差异
 
 默认情况下，该命令用于比较工作区与暂存区的文件间的差异。
 
@@ -130,7 +130,7 @@ git diff HEAD -- 命令可以查看工作区和版本库里面指定文件的区
 git diff HEAD -- readme.txt
 ```
 
-* git checkout 命令可以丢弃工作区的修改
+### git checkout 命令可以丢弃工作区的修改
 
 工作目录中丢弃指定的文件。
 
@@ -183,9 +183,9 @@ git checkout其实是用版本库里的版本替换工作区的版本，无论�
 git mv 文件名1 文件名2
 ```
 
-## 分支管理
+## 本地分支管理
 
-* 分支创建 
+### 分支创建 
 
 创建dev分支，然后切换到dev分支
 
@@ -200,7 +200,7 @@ git branch dev
 git checkout dev
 ```
 
-* 分支查看
+### 分支查看
 
 用git branch命令查看当前分支。
 
@@ -210,7 +210,7 @@ git branch
 
 git branch命令会列出所有分支，当前分支前面会标一个*号。
 
-* 分支切换
+### 分支切换
 
 现在，dev分支的工作完成，我们就可以切换回master分支。
 
@@ -221,7 +221,7 @@ git checkout master
 
 切换回master分支后，再查看一个readme.txt文件，刚才添加的内容不见了！因为那个提交是在dev分支上，而master分支此刻的提交点并没有变。
 
-* 分支合并
+### 分支合并
 
 git merge命令用于合并指定分支到当前分支。
 
@@ -235,7 +235,7 @@ git merge命令用于合并指定分支到当前分支。合并后，再查看re
 
 当然，也不是每次合并都能Fast-forward，我们后面会讲其他方式的合并。
 
-* 分支删除
+### 分支删除
 
 合并完成后，就可以放心地删除dev分支了。
 
@@ -256,7 +256,7 @@ git branch
 ```
 因为创建、合并和删除分支非常快，所以Git鼓励你使用分支完成某个任务，合并后再删掉分支，这和直接在master分支上工作效果是一样的，但过程更安全。
 
-* bug分支
+## bug分支
 
 Git还提供了一个stash功能，可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作。
 
@@ -286,7 +286,7 @@ git stash apply stash@{0}
 
 ### 关联Github账户
 
-* 生成密钥
+#### 生成密钥
 
 在电脑的git中，输入一下命令生成git密码。
 
@@ -305,11 +305,11 @@ ssh-keygen -t rsa -C "kuang_xu@126.com"
 # 再次回车(密码确认，再次输入
 ```
 
-* 连接Github
+#### 连接Github
 
 上述命令若执行成功，会在c/Users/kx/.ssh/目录下生成两个文件id_rsa和id_rsa.pub，用文本编辑器打开ssh.pub文件，拷贝其中的内容，在Github网站上个人账户中将其添加到Add SSH Key中。
 
-* 查看Github账户关联成功
+#### 查看Github账户关联成功
 
 ```
 ssh -T git@github.com
@@ -365,20 +365,18 @@ git remote rm origin
 
 ### 远程分支的管理
 
-* 查看远程分支
+#### 查看远程分支
 
 git branch命令可以查看本地分支，-r选项，可以用来查看远程分支，-a选项查看本地和远程分支。
 
-* 删除远程分支
+#### 删除远程分支
 
 ```
 git push origin --delete master
 ```
 
-```
-git push --set-upstream origin master
-```
-* 查看分支的追踪链接
+#### 查看分支的追踪链接
+
 分支的upstream，即为分支的追踪链接，其实就是与远程分支做关联，告诉git，默认此分支为推送及拉取的远程分支的信息。
 
 ```
@@ -386,7 +384,7 @@ git reomte show origin
 ```
 Remote branches表示远程仓库的分支，git pull表示upstream跟踪分支。
 
-* 建立分支的追踪链接
+#### 建立分支的追踪链接
 
 ```
 git branch --set-upstream 本地分支  远程仓库名/远程分支
@@ -394,7 +392,7 @@ git branch --set-upstream 本地分支  远程仓库名/远程分支
 注意此时的远程分支必须存在。
 
 
-* 取消分支的追踪链接
+#### 取消分支的追踪链接
 
 ```
 git branch --unset-upstream
