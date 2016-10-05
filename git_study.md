@@ -319,7 +319,7 @@ ssh -T git@github.com
 
 ### 创建Github远程仓库
 
-在GitHub网站上创建一个新仓库learngit。这里的仓库名是learngit，但在本地git中关联时，一般看作是地址的一部分。
+在GitHub网站上创建一个新仓库learngit。这里的仓库名是learngit，但在本地git中关联时，一般看作是地址的一部分，而不认为是远程仓库名。
 
 ### 建立远程链接
 
@@ -331,15 +331,15 @@ ssh -T git@github.com
 git remote add origin git@github.com:xukuang/learngit.git
 ```
 
-添加后，远程库的名字就是origin，这是Git默认的叫法，也可以改成别的，但是origin这个名字一看就知道是远程库。git@github.com:xukuang/learngit.git可以认为是远程仓库origin的路径。
+添加后，远程库的名字就是origin，这是Git默认的叫法，也可以改成别的，但是origin这个名字一看就知道是远程库。git@github.com:xukuang/learngit.git可以认为是远程仓库origin的地址。
 
 ### 查看远程链接
 
 ``` 
-git remote -v
+git remote
 ```
+该命令会列出所有远程仓库名的名字，-v选项还会列出远程仓库的地址。
 
-该命令可以查看所有远程仓库的名字。
 
 ### 重命名远程链接
 
@@ -351,9 +351,6 @@ git remote rename pb paul
 
 注意，对远程仓库的重命名，也会使对应的分支名称发生变化，原来的 pb/master 分支现在成了 paul/master。
 
-碰到远端仓库服务器迁移，或者原来的克隆镜像不再使用，又或者某个参与者不再贡献代码，那么需要移除对应的远端仓库，可以运行 git remote rm 命令：
-
-$ git remote rm paul
 
 ### 删除远程链接
 
@@ -363,35 +360,79 @@ $ git remote rm paul
 git remote rm origin
 ```
 
+### 远程分支的管理
+
+* 查看远程分支
+
+git branch命令可以查看本地分支，-r选项，可以用来查看远程分支，-a选项查看本地和远程分支。
+
+* 删除远程分支
+
+```
+git push origin --delete master
+```
+
+```
+git push --set-upstream origin master
+```
+* 查看分支的追踪链接
+分支的upstream，即为分支的追踪链接，其实就是与远程分支做关联，告诉git，默认此分支为推送及拉取的远程分支的信息。
+
+```
+git reomte show origin
+```
+Remote branches表示远程仓库的分支，git pull表示upstream跟踪分支。
+
+* 建立分支的追踪链接
+
+```
+git branch --set-upstream 本地分支  远程仓库名/远程分支
+```
+注意此时的远程分支必须存在。
+
+
+* 取消分支的追踪链接
+
+```
+git branch --unset-upstream
+``` 
+该命令取消当前分支的追踪链接，取消其它分支的追踪链接为：
+
+```
+git branch --unset-upstream <分支名>
+
+```
+
 ### 推送本地内容
 
-建立链接后，就可以把本地库的所有内容推送到远程库上。
+#### git push命令
 
-* 推送master分支到远程仓库
+```
+git push <远程仓库名> <本地分支名>:<远程分支名>
+```
+
+git push命令用于将本地分支的更新，推送到远程主机。分支推送顺序的写法是<来源地>:<目的地>，所以git push是<本地分支>:<远程分支>。如果省略远程分支名，则表示将本地分支推送与之存在"追踪关系"的远程分支（通常两者同名），如果该远程分支不存在，则会被新建。
+
+git push命令的-u选项为推送本地分支到远程仓库远程分支，并且建立本地分支的追踪的远程分支。建立远程仓库的远程链接之后，第一次推送一般要用-u选项。
+
+#### 推送分支到远程仓库
+
+建立链接后，就可以把本地库的所有内容推送到远程库上。
 
 ```
 git push -u origin master
 ```
 
-把本地库的内容推送到远程，用git push命令，实际上是把当前分支master推送到远程。
+上面命令表示，将本地的master分支推送到origin主机的master分支。如果后者不存在，则会被新建。
 
-由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。
+由于尚未建立分支的追踪，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。
 
-之后，如果本地作了提交，可以通过命令。
+追踪关系建立之后，如果本地作了提交，可以通过如下命令。
 
 ```
 git push origin master
 ```
 该命令甚至可以简化为 git push。
-
-* 推送其它分支
-
-当仓库有两个以上分支时，推送完master分支之后，首次推送其他分支，要使用一下命令。
-
-```
-git push --set-upstream origin feature
-```
-之后，如果在当前分支上，依旧可以使用git push推送。
 
 事实上，我们也可以通过git push命令删除远程仓库中的这个分支。
 
@@ -403,7 +444,6 @@ git push [远程名] [本地分支]:[远程分支] 语法，如果省略[本地�
 也可以使用命令。 
 
 把本地master分支的最新修改推送至GitHub，现在，你就拥有了真正的分布式版本库。
-
 
 ## 克隆远程仓库
 
